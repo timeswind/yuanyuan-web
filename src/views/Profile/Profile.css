@@ -1,0 +1,368 @@
+.profile-header {
+  width: 100%;
+  background: #fff;
+  padding: 32px 0;
+}
+.p-h-avatar img {
+  border-radius: 3px
+}
+
+.p-tabs-inner-wrapper > div > div:nth-child(1), .p-tabs-inner-wrapper > div > div:nth-child(2) {
+  max-width: 600px;
+  margin: 0 auto
+}
+
+.p-header-makeappointment {
+  display: flex;
+  margin-top: 16px;
+  display: flex;
+}
+
+.profile-info-icon {
+  margin-right: 8px;
+  color: #666 !important;
+}
+
+.profile-body {
+  padding: 0 0 32px 0
+}
+
+.p-categories-wrapper {
+  background-color: #fff;
+  padding: 0 16px
+}
+
+.p-categories {
+  padding: 16px 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  max-width: 60%;
+  margin: 0 auto
+}
+
+.p-category-label {
+  padding: 8px 16px 8px 16px;
+  border-radius: 3px;
+  background: #ddd;
+  margin: 8px 8px 0 0;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08)
+}
+
+.p-tabs-outter-wrapper {
+  position: relative;
+}
+
+.p-tabs-outter-wrapper:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  height: 48px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.09);
+}
+
+.p-tab-wrapper {
+  border-radius: 3px;
+  margin-top: 8px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.09);
+  padding: 16px;
+  color: #595959
+}
+
+
+.p-tabs-inner-wrapper {
+  margin: 0 auto;
+}
+
+.weekday {
+  position: relative;
+  flex: 1 0 0px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #ddd;
+}
+
+.time-slot {
+  height: 36px;
+  border-top: 1px solid #eee;
+  width: 100%;
+}
+
+.time-label .time-slot:first-child, .hour-slot .time-slot:first-child{
+  border-top: 1px solid #ccc;
+}
+
+.table-header {
+  padding: 0 8px;
+  line-height: 49px;
+}
+
+.weekday:first-child {
+  border-left: none
+}
+
+.calender-event {
+  padding: 8px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  background: #32b337;
+  color: #fff;
+  cursor: pointer;
+}
+.calender-event:hover {
+  background: #2b982f;
+}
+
+.p-appointment-status-pending {
+  color: #ffc107;
+  position: absolute;
+  right: 0
+}
+
+.p-appointment-status-scheduled {
+  color: #4caf50;
+  position: absolute;
+  right: 0
+}
+
+.p-appointment-status-reject {
+  color: #ff5722;
+  position: absolute;
+  right: 0
+}
+
+.panel-header {
+  font-family: 'Raleway';
+  flex-direction: row;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 16px;
+}
+
+.panel-body {
+  padding: 16px
+}
+
+.panel-top-entries {
+  display: flex;
+}
+
+.panel-top-entry {
+  cursor: pointer;
+}
+
+.dashboard-body-wrapper {
+  display: flex;
+}
+
+.dashboard-left-panels-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-right-panel-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-brief-wrapper {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.p-h-info .name {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+  .p-h-wrapper {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-h-avatar {
+    margin-bottom: 16px
+  }
+  .p-h-info .name {
+    text-align: center;
+  }
+  .p-header-makeappointment {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .p-brief-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-brief-left {
+    flex: 100
+  }
+
+  .p-brief-right {
+    flex: 100
+  }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+  .p-h-wrapper {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-h-avatar {
+    margin-bottom: 16px
+  }
+  .p-h-info .name {
+    text-align: center;
+  }
+  .p-header-makeappointment {
+    align-items: center;
+    justify-content: center;
+  }
+  .p-brief-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-brief-left {
+    flex: 100
+  }
+
+  .p-brief-right {
+    flex: 100
+  }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .p-h-wrapper {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-h-avatar {
+    margin-bottom: 16px
+  }
+  .p-h-info .name {
+    text-align: center;
+  }
+  .p-header-makeappointment {
+    align-items: center;
+    justify-content: center;
+  }
+  .p-brief-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-brief-left {
+    flex: 100
+  }
+
+  .p-brief-right {
+    flex: 100
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .p-h-wrapper {
+    max-width: 800px;
+    padding: 0 16px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .p-h-info {
+    margin-left: 32px
+  }
+  .p-h-avatar {
+    margin-bottom: 0
+  }
+  .p-h-info .name {
+    text-align: left;
+  }
+  .p-header-makeappointment {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .p-brief-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .p-brief-left {
+    flex: 70
+  }
+  .p-brief-right {
+    flex: 30;
+    margin-left: 8px
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  .p-h-wrapper {
+    max-width: 800px;
+    padding: 0 16px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .p-h-info {
+    margin-left: 32px
+  }
+  .p-h-avatar {
+    margin-bottom: 0
+  }
+  .p-h-info .name {
+    text-align: left;
+  }
+  .p-header-makeappointment {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .p-brief-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .p-brief-left {
+    flex: 70
+  }
+  .p-brief-right {
+    flex: 30;
+    margin-left: 8px
+  }
+}
+
+.p-mapbox-wrapper {
+  padding: 16px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  vertical-align: top;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+}
