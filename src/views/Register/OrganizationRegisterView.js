@@ -15,7 +15,7 @@ class OrganizationRegisterView extends React.Component {
     console.log(form)
     form['name'] = form.organizationName
     if ('organizationName' in form) {
-      if (form.organizationName == '') {
+      if (form.organizationName === '') {
         throw new SubmissionError({'organizationName': 'empty'})
       }
     } else {

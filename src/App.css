@@ -7,6 +7,7 @@
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   background-color: #fff;
   z-index: 1000;
 }
@@ -92,6 +93,9 @@
 
 .nav-brand-text {
   line-height: 48px;
+  background: -webkit-linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-brand-text-white {
@@ -108,9 +112,6 @@
     font-size: 26px;
     font-family: "Roboto";
     font-weight: 600;
-    background: -webkit-linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     cursor: pointer;
   }
 
@@ -128,7 +129,6 @@
     font-size: 26px;
     font-family: "Roboto";
     font-weight: 600;
-    color: rgb(48, 73, 102);
     cursor: pointer;
     width: 50%
   }

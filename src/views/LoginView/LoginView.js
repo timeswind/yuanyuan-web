@@ -18,7 +18,7 @@ const styles = {
     color: 'white',
     height: 48,
     padding: '0 30px',
-    marginBottom: 16,
+    marginBottom: 32,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
   },
   loginButton: {
@@ -108,7 +108,7 @@ class LoginView extends Component {
         <div className="g-background" style={{padding:"36px 8px 64px 8px"}}>
           <div style={{maxWidth: "500px", margin: 'auto', display: 'flex', flexDirection: 'column'}}>
             <div style={{display:'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-              <Button color="primary" style={{marginBottom: 32}}
+              <Button color="primary"
                 style={styles.registerOrganzationButton}
                 onClick={()=> {this.props.dispatch(push('/register/organization'))}}>
                 注册组织账号 ->

@@ -21,7 +21,7 @@ const renderTextField = ({
 
 class OrganizationRegisterForm extends React.Component {
   render() {
-    const { handleSubmit, pristine, reset, submitting, style } = this.props
+    const { handleSubmit, pristine, submitting, style } = this.props
     return (
       <form onSubmit={handleSubmit} style={style}>
         <Typography type="display2" gutterBottom>

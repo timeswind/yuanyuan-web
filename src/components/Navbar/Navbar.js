@@ -3,7 +3,6 @@ import * as AuthActions from '../../redux/actions/auth.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
@@ -49,7 +48,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { auth, path, actions } = this.props
+    const { auth } = this.props
     return (
       <div className="navbar-wrapper">
         <div className="navbar flex-row flex-center">
