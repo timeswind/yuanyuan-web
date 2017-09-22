@@ -7,13 +7,15 @@ import {push} from 'react-router-redux';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './Dashboard.css'
-import Button from 'material-ui/Button';
+import ColorfullButton from '../../components/colorfullButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import { uploadArticleImage } from '../../core/upload';
+
 
 function TabContainer (props) {
   return <div>{props.children}</div>
@@ -26,7 +28,7 @@ const styles = {
     marginBottom: 12,
     fontWeight: 400,
   },
-  submitButton: {
+  submitColorfullButton: {
     position: 'fixed',
     color: '#fff',
     bottom: 32,
@@ -112,63 +114,8 @@ class OrganizationDashboard extends React.Component {
     });
   };
 
-  uploadImage(image) {
-    console.log(image)
-    var today = new Date();
-    const bucket = "yuanyuanofficial" // yuanyuanofficial
-    const region = "us-east-1" // us-east-1
-    const folder = "article_images/" // 'article_images/'
-    const expiration = new Date(today.getTime() + 10*60000).toISOString() //"2017-09-14T12:00:00.000Z"
-    const date = moment().format('YYYYMMDD')
-    console.log(expiration)
-    console.log(date)
-
-    return new Promise(function (resolve, reject) {
-      axios.get(`/api/protect/upload-pic-token?bucket=${bucket}&region=${region}&folder=${folder}&expiration=${expiration}&date=${date}&filename=${image.name}`)
-      .then(function (response) {
-        if (response.data.success) {
-          const Policy = response.data.Policy
-          const XAmzSignature = response.data["X-Amz-Signature"]
-          var formData = new FormData();
-          formData.append("key", `${folder}${image.name}`);
-          formData.append("acl", "public-read")
-          formData.append("Content-Type", `${image.type}`)
-          formData.append("x-amz-meta-uuid", "14365123651274")
-          formData.append("X-Amz-Credential", `AKIAJEIJLWEBQFRI2M7Q/${date}/${region}/s3/aws4_request`)
-          formData.append("x-amz-meta-tag", "")
-          formData.append("X-Amz-Algorithm", "AWS4-HMAC-SHA256")
-          formData.append("X-Amz-Date", `${date}T000000Z`)
-          formData.append("Policy", Policy)
-          formData.append("X-Amz-Signature", XAmzSignature)
-          formData.append("file", image)
-          var xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://yuanyuanofficial.s3.amazonaws.com/");
-          xhr.onload = function () {
-            if (this.status >= 200 && this.status < 300) {
-              resolve({ data: { link: `http://yuanyuanofficial.s3.amazonaws.com/${folder}${image.name}` } });
-            } else {
-              reject({
-                status: this.status,
-                statusText: xhr.statusText
-              });
-            }
-          };
-          // xhr.onerror = function () {
-          //   reject({
-          //     status: this.status,
-          //     statusText: xhr.statusText
-          //   });
-          // };
-          xhr.send(formData);
-        }
-      })
-    });
-  }
-
-
   render() {
     const { tab } = this.state;
-
     return (
       <div className="view-body">
         <AppBar position="static">
@@ -194,44 +141,43 @@ class OrganizationDashboard extends React.Component {
           </TabContainer>}
           {tab === 1 &&
             <TabContainer>
-              <TabContainer>
-                <div style={{height: "100%", background: "#fff"}}>
-                  <div>
-                    <TextField
-                      style={{fontSize: 24, margin: 16, width: "calc(100% - 32px)"}}
-                      label="标题"
-                      value={this.state.title}
-                      onChange={this.handleTitleChange}
-                      />
-                  </div>
-                  <Editor
-                    editorState={this.state.editorState}
-                    toolbarClassName="toolbarClassName"
-                    wrapperClassName="editorWrapper"
-                    editorClassName="editor"
-                    onEditorStateChange={this.onChange}
-                    toolbar={{
-                      image: { urlEnabled: true, uploadEnabled: true, uploadCallback: this.uploadImage, defaultSize: { width: "100%", height: "auto" }}
-                    }}
+              <div style={{height: "100%", background: "#fff"}}>
+                <div>
+                  <TextField
+                    style={{fontSize: 24, margin: 16, width: "calc(100% - 32px)"}}
+                    label="标题"
+                    value={this.state.title}
+                    onChange={this.handleTitleChange}
                     />
-                  {this.state.tab === 1 && (<Button raised style={styles.submitButton} onClick={this.submit}>发布</Button>)}
                 </div>
-              </TabContainer>
-            </TabContainer>}
-          </div>
-        );
-      }
+                <Editor
+                  editorState={this.state.editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="editorWrapper"
+                  editorClassName="editor"
+                  onEditorStateChange={this.onChange}
+                  toolbar={{
+                    image: { urlEnabled: true, uploadEnabled: true, uploadCallback: uploadArticleImage, defaultSize: { width: "100%", height: "auto" }}
+                  }}
+                  />
+                {this.state.tab === 1 && (<ColorfullButton raised style={styles.submitColorfullButton} onClick={this.submit}>发布</ColorfullButton>)}
+              </div>
+            </TabContainer>
+          }
+        </div>
+      );
     }
-    // const mapStatesToProps = (states) => {
-    //   return {
-    //     search: states.search
-    //   };
-    // }
+  }
+  // const mapStatesToProps = (states) => {
+  //   return {
+  //     search: states.search
+  //   };
+  // }
 
-    const mapDispatchToProps = (dispatch) => {
-      return {
-        dispatch
-      };
-    }
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      dispatch
+    };
+  }
 
-    export default connect(null, mapDispatchToProps)(OrganizationDashboard);
+  export default connect(null, mapDispatchToProps)(OrganizationDashboard);

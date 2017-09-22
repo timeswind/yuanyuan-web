@@ -6,15 +6,17 @@ import {Editor} from 'draft-js';
 import LazyLoad from 'react-lazyload';
 import {connect} from 'react-redux';
 import Button from 'material-ui/Button';
-
+import ColorfullButton from '../../components/colorfullButton';
 
 const styles = {
   articleWrapper: {
     maxWidth: '740px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: 20,
-    paddingTop: 64
+    padding: '16px 32px',
+    marginTop: 84,
+    border: '1px solid #ddd',
+    backgroundColor: "#fff"
   },
   title: {
     paddingBottom: 10,
@@ -88,7 +90,8 @@ class ArticleView extends React.Component {
       <div style={styles.articleWrapper}>
         {this.state.isAuthor && (
           <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 32}}>
-            <Button color="primary" raised style={{color: '#fff'}} onClick={this.edit}>编辑</Button>
+            <ColorfullButton color="primary" raised style={{color: '#fff'}} onClick={this.edit}>编辑</ColorfullButton>
+            <Button style={{color: 'red'}} onClick={this.edit}>删除</Button>
           </div>
         )}
         <h1 style={styles.title}>{this.state.title}</h1>
