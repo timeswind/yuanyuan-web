@@ -21,6 +21,17 @@ const styles = {
     marginBottom: 32,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
   },
+  registerStudentButton: {
+    background: 'linear-gradient(45deg, #00BCD4 30%, #2196F3 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    marginBottom: 32,
+    marginRight: 32,
+    boxShadow: 'rgba(3, 169, 244, 0.22) 0px 3px 5px 2px'
+  },
   loginButton: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     borderRadius: 3,
@@ -108,6 +119,11 @@ class LoginView extends Component {
         <div className="g-background" style={{padding:"36px 8px 64px 8px"}}>
           <div style={{maxWidth: "500px", margin: 'auto', display: 'flex', flexDirection: 'column'}}>
             <div style={{display:'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <Button color="primary"
+                style={styles.registerStudentButton}
+                onClick={()=> {this.props.dispatch(push('/register/student'))}}>
+                注册学生账号 ->
+              </Button>
               <Button color="primary"
                 style={styles.registerOrganzationButton}
                 onClick={()=> {this.props.dispatch(push('/register/organization'))}}>

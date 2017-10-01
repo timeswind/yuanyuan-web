@@ -1,18 +1,11 @@
 import {
-  SET_VIEW_DRAWER_STATUS,
-  SET_VIEW_MESSAGEBOX_STATUS
+  SET_VIEW_SNACKBAR_STATUS,
 } from '../constants'
 
-export function setViewDrawerStatus(status) {
+export function setViewSnackbarStatus(data) {
   return {
-    type: SET_VIEW_DRAWER_STATUS,
-    status: status
-  }
-}
-
-export function setViewMessageboxStatus(status) {
-  return {
-    type: SET_VIEW_MESSAGEBOX_STATUS,
-    status: status
+    type: SET_VIEW_SNACKBAR_STATUS,
+    status: data.status,
+    message: data.message
   }
 }

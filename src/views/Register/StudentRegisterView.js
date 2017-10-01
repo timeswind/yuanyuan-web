@@ -1,5 +1,5 @@
 import React from 'react'
-import OrganizationRegisterForm from './OrganizationRegisterForm'
+import StudentRegisterForm from './StudentRegisterForm'
 import { SubmissionError } from 'redux-form';  // ES6
 import axios from 'axios';
 import localStore from 'store2';
@@ -9,21 +9,21 @@ import * as AuthActions from '../../redux/actions/auth';
 import * as ViewActions from '../../redux/actions/view';
 import { push } from 'react-router-redux'
 
-class OrganizationRegisterView extends React.Component {
+class StudentRegisterView extends React.Component {
   handleSubmit (form) {
+    console.log(form)
     const self = this
     const {actions, dispatch} = this.props
-    console.log(form)
-    form['name'] = form.organizationName
-    if ('organizationName' in form) {
-      if (form.organizationName === '') {
-        throw new SubmissionError({'organizationName': 'empty'})
+    form['name'] = form.name
+    if ('name' in form) {
+      if (form.name === '') {
+        throw new SubmissionError({'name': 'empty'})
       }
     } else {
-      throw new SubmissionError({'organizationName': 'empty'})
+      throw new SubmissionError({'name': 'empty'})
     }
 
-    axios.post('/api/public/organization_register', form)
+    axios.post('/api/public/student_register', form)
     .then(function(response) {
       console.log(response)
       var json = response.data
@@ -43,7 +43,7 @@ class OrganizationRegisterView extends React.Component {
         localStore.session("role", json.role);
         localStore.session("school", json.school);
 
-        dispatch(push('/organization'))
+        dispatch(push('/student'))
       }
     }).catch(function (error) {
       if (error.response) {
@@ -68,17 +68,18 @@ class OrganizationRegisterView extends React.Component {
   render() {
     return (
       <div>
-        <OrganizationRegisterForm style={{maxWidth: 800, margin: 'auto', paddingTop: 128}} onSubmit={(form) => this.handleSubmit(form)}/>
-      </div>
+        <StudentRegisterForm style={{maxWidth: 800, margin: 'auto', paddingTop: 128}} onSubmit={(form) => this.handleSubmit(form)}/>
+    </div>
     )
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatch,
-    actions: bindActionCreators(Object.assign({}, AuthActions, ViewActions), dispatch)
+    actions: bindActionCreators(Object.assign({}, ViewActions, AuthActions), dispatch)
   };
 }
 
-export default connect(null, mapDispatchToProps)(OrganizationRegisterView);
+export default connect(null, mapDispatchToProps)(StudentRegisterView);

@@ -18,6 +18,7 @@ import App from './App';
 
 import { reducer as formReducer } from 'redux-form'
 import authReducers from './redux/reducers/auth';
+import viewReducers from './redux/reducers/view';
 // import startChatService, {chatServiceMiddleware} from './core/chatService';
 import { onEnterSignUpPage, onEnterSignInPage } from './configs/routerOnEnterCheck'
 import restoreAuth from './core/restoreAuth'
@@ -36,7 +37,7 @@ const store = createStore(
     form: formReducer,
     routing: routerReducer,
     // internal: internalReducers,
-    // view: viewReducers,
+    view: viewReducers,
     auth: authReducers,
     // search: searchReducers,
     // list: listReducers,
@@ -96,6 +97,21 @@ const MUI = () => (
               }}
               onEnter={onEnterSignUpPage(store)}>
             </Route>
+            <Route path="student" getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Register/StudentRegisterView').default)
+                }, 'auth')
+              }}
+              onEnter={onEnterSignUpPage(store)}>
+            </Route>
+          </Route>
+          <Route path="/student">
+            <IndexRoute getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Student/Dashboard').default)
+                }, 'student')
+              }}>
+            </IndexRoute>
           </Route>
           <Route path="/organization">
             <IndexRoute getComponent={function(location, cb){

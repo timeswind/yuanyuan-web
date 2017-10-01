@@ -10,7 +10,7 @@ export function onEnterSignUpPage (store) {
         done()
       } else if (role === 1) {
         replace({
-          pathname: '/home'
+          pathname: '/student'
         })
         done()
       }
@@ -32,7 +32,7 @@ export function onEnterSignInPage (store) {
         done()
       } else if (role === 1) {
         replace({
-          pathname: '/home'
+          pathname: '/student'
         })
         done()
       }

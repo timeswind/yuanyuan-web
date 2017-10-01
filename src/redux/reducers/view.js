@@ -1,22 +1,17 @@
 import {
-  SET_VIEW_DRAWER_STATUS,
-  SET_VIEW_MESSAGEBOX_STATUS
+  SET_VIEW_SNACKBAR_STATUS
 } from '../constants'
 
 const initialState = {
-  drawer: false,
-  messagebox: false
+  snackbarOpen: false,
+  snackbarMessage: ''
 }
 
 export default function update(state = initialState, action) {
-  if(action.type === SET_VIEW_DRAWER_STATUS) {
+  if(action.type === SET_VIEW_SNACKBAR_STATUS) {
     return Object.assign({}, state, {
-      drawer: action.status
-    })
-  }
-  if(action.type === SET_VIEW_MESSAGEBOX_STATUS) {
-    return Object.assign({}, state, {
-      messagebox: action.status
+      snackbarOpen: action.status,
+      snackbarMessage: action.message || ''
     })
   }
   return state
