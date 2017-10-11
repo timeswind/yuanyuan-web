@@ -14,7 +14,7 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '16px 32px',
-    marginTop: 84,
+    marginTop: 32,
     border: '1px solid #ddd',
     backgroundColor: "#fff"
   },
@@ -61,6 +61,7 @@ class ArticleView extends React.Component {
   }
 
   edit = () => {
+    console.log('edit')
     this.props.dispatch(push(`/organization/article/${this.state.id}/edit`))
   }
 
@@ -91,7 +92,7 @@ class ArticleView extends React.Component {
         {this.state.isAuthor && (
           <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 32}}>
             <ColorfullButton color="primary" raised style={{color: '#fff'}} onClick={this.edit}>编辑</ColorfullButton>
-            <Button style={{color: 'red'}} onClick={this.edit}>删除</Button>
+            <Button style={{color: 'red'}}>删除</Button>
           </div>
         )}
         <h1 style={styles.title}>{this.state.title}</h1>

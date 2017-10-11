@@ -117,7 +117,7 @@ class OrganizationDashboard extends React.Component {
   render() {
     const { tab } = this.state;
     return (
-      <div className="view-body">
+      <div>
         <AppBar position="static">
           <Tabs value={tab} onChange={this.handleTabChange}>
             <Tab label="我的文章" />

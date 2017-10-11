@@ -38,13 +38,13 @@ const validate = values => {
   return errors
 }
 
-const warn = values => {
-  const warnings = {}
-  if (values.age < 19) {
-    warnings.age = 'Hmm, you seem a bit young...'
-  }
-  return warnings
-}
+// const warn = values => {
+//   const warnings = {}
+//   if (values.age < 19) {
+//     warnings.age = 'Hmm, you seem a bit young...'
+//   }
+//   return warnings
+// }
 
 
 const renderField = ({

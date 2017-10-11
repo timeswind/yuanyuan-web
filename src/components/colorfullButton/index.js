@@ -18,10 +18,15 @@ const styles = {
   },
 };
 
-function OverridesClassNames(props) {
+function OverridesClassNames({
+  classes,
+  style,
+  children,
+  ...custom
+}) {
   return (
-    <Button className={props.classes.button} style={props.style}>
-      {props.children ? props.children : 'class names'}
+    <Button className={classes.button} style={style}  {...custom}>
+      {children ? children : 'class names'}
     </Button>
   );
 }
