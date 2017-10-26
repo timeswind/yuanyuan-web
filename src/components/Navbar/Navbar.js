@@ -38,9 +38,11 @@ class Navbar extends Component {
   };
 
   logout() {
+    const self = this
     const { actions } = this.props;
-    actions.logout()
-    this.routerPush('/')
+    actions.logout().then(() => {
+      self.routerPush('/')
+    })
   }
 
   routerPush (path) {

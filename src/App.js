@@ -5,23 +5,121 @@ import * as ViewActions from './redux/actions/view'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux'
 import './App.css';
-/* eslint-disable flowtype/require-valid-file-annotation */
-import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
-import { mailFolderListItems } from './sideMenu';
+import {SideMenu} from './sideMenu';
+import PlainAppContainer from './PlainAppContainer';
+import ProgressModal from './components/ProgressModal';
 
 const drawerWidth = 240;
+
+
+class App extends Component {
+  state = {
+    open: false
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleRequestClose = (event, reason) => {
+    this.props.actions.setViewSnackbarStatus({status: false, message: ''})
+  };
+
+  render() {
+    const { children, view, classes, theme, location } = this.props
+    return (
+      <div>
+        <ProgressModal show={view.progressModal}/>
+        {location.pathname === '/' ? (
+          <PlainAppContainer>{children}</PlainAppContainer>
+        ) : (
+          <div className={classes.root}>
+            <div className={classes.appFrame}>
+              <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
+                <Toolbar disableGutters={!this.state.open}>
+                  <IconButton
+                    color="contrast"
+                    aria-label="open drawer"
+                    onClick={this.handleDrawerOpen}
+                    className={classNames(classes.menuButton, this.state.open && classes.hide)}
+                    >
+                    <MenuIcon />
+                  </IconButton>
+                  <Navbar />
+                </Toolbar>
+              </AppBar>
+              <Drawer
+                type="permanent"
+                classes={{
+                  paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                }}
+                open={this.state.open}
+                >
+                <div className={classes.drawerInner}>
+                  <div className={classes.drawerHeader}>
+                    <IconButton onClick={this.handleDrawerClose}>
+                      {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
+                  </div>
+                  <Divider />
+                  <List className={classes.list}>
+                    <SideMenu />
+                  </List>
+                </div>
+              </Drawer>
+              <main className={classNames(classes.content, this.state.open && classes.contentShift)}>
+                <div>
+                  {children}
+                </div>
+              </main>
+            </div>
+            <Snackbar
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              open={view.snackbarOpen}
+              autoHideDuration={3000}
+              onRequestClose={this.handleRequestClose}
+              SnackbarContentProps={{
+                'aria-describedby': 'message-id',
+              }}
+              message={<span id="message-id">{view.snackbarMessage}</span>}
+              />
+          </div>
+        )}
+      </div>
+    )
+  }
+}
+
+const mapStatesToProps = (states) => {
+  return {
+    view: states.view
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch,
+    actions: bindActionCreators(Object.assign({}, ViewActions), dispatch)
+  };
+}
 
 const styles = theme => ({
   root: {
@@ -121,98 +219,6 @@ const styles = theme => ({
     })
   }
 });
-
-class App extends Component {
-  state = {
-    open: false
-  }
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleRequestClose = (event, reason) => {
-    this.props.actions.setViewSnackbarStatus({status: false, message: ''})
-  };
-
-  render() {
-    const { children, view, classes, theme } = this.props
-    return (
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
-            <Toolbar disableGutters={!this.state.open}>
-              <IconButton
-                color="contrast"
-                aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, this.state.open && classes.hide)}
-                >
-                <MenuIcon />
-              </IconButton>
-              <a className="nav-brand-text">
-                YUANYUAN
-              </a>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            type="permanent"
-            classes={{
-              paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
-            }}
-            open={this.state.open}
-            >
-            <div className={classes.drawerInner}>
-              <div className={classes.drawerHeader}>
-                <IconButton onClick={this.handleDrawerClose}>
-                  {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </IconButton>
-              </div>
-              <Divider />
-              <List className={classes.list}>{mailFolderListItems}</List>
-            </div>
-          </Drawer>
-          <main className={classNames(classes.content, this.state.open && classes.contentShift)}>
-            <div>
-              {children}
-            </div>
-          </main>
-        </div>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          open={view.snackbarOpen}
-          autoHideDuration={3000}
-          onRequestClose={this.handleRequestClose}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{view.snackbarMessage}</span>}
-          />
-      </div>
-
-    );
-  }
-}
-
-const mapStatesToProps = (states) => {
-  return {
-    view: states.view
-  };
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatch,
-    actions: bindActionCreators(Object.assign({}, ViewActions), dispatch)
-  };
-}
 
 App = withStyles(styles, { withTheme: true })(App)
 

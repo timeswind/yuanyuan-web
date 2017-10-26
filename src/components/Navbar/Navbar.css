@@ -17,6 +17,19 @@
   background: rgba(0, 0, 0, 0.8);
 }
 
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin: 0;
+  padding: 8px 32px 8px 0;
+}
+
+.navbar-wrapper {
+  background-color: #fff;
+  width: 100%
+}
+
 .nav-menu {
   border-radius: 3px;
   margin-left: auto !important

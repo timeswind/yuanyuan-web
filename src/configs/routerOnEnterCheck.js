@@ -1,7 +1,7 @@
 export function onEnterSignUpPage (store) {
-  const isLogin = store.getState().auth.isLogin
-  const role = store.getState().auth.role
   return function (nextState, replace, done) {
+    const isLogin = store.getState().auth.isLogin
+    const role = store.getState().auth.role
     if (isLogin) {
       if (role === 2) {
         replace({
@@ -21,9 +21,9 @@ export function onEnterSignUpPage (store) {
 }
 
 export function onEnterSignInPage (store) {
-  const isLogin = store.getState().auth.isLogin
-  const role = store.getState().auth.role
   return function (nextState, replace, done) {
+    const isLogin = store.getState().auth.isLogin
+    const role = store.getState().auth.role
     if (isLogin) {
       if (role === 2) {
         replace({
@@ -37,6 +37,32 @@ export function onEnterSignInPage (store) {
         done()
       }
     } else {
+      // replace({
+      //   pathname: '/'
+      // })
+      done()
+    }
+  }
+}
+
+export function onEnterOrganizationPage (store) {
+  return function (nextState, replace, done) {
+    const isLogin = store.getState().auth.isLogin
+    const role = store.getState().auth.role
+    if (isLogin) {
+      if (role === 2) {
+        done()
+      } else if (role === 1) {
+        replace({
+          pathname: '/student'
+        })
+        done()
+      }
+    } else {
+      console.log("not login")
+      replace({
+        pathname: '/'
+      })
       done()
     }
   }

@@ -8,6 +8,7 @@ import { compose, createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import IndexRoute from 'react-router/lib/IndexRoute';
+import IndexRedirect from 'react-router/lib/IndexRedirect';
 import { MuiThemeProvider } from 'material-ui/styles';
 import thunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
@@ -19,8 +20,9 @@ import App from './App';
 import { reducer as formReducer } from 'redux-form'
 import authReducers from './redux/reducers/auth';
 import viewReducers from './redux/reducers/view';
+import dataReducers from './redux/reducers/data';
 // import startChatService, {chatServiceMiddleware} from './core/chatService';
-import { onEnterSignUpPage, onEnterSignInPage } from './configs/routerOnEnterCheck'
+import { onEnterSignUpPage, onEnterSignInPage, onEnterOrganizationPage } from './configs/routerOnEnterCheck'
 import restoreAuth from './core/restoreAuth'
 import theme from './core/theme'
 import './index.css';
@@ -36,7 +38,7 @@ const store = createStore(
   combineReducers({
     form: formReducer,
     routing: routerReducer,
-    // internal: internalReducers,
+    data: dataReducers,
     view: viewReducers,
     auth: authReducers,
     // search: searchReducers,
@@ -113,13 +115,14 @@ const MUI = () => (
               }}>
             </IndexRoute>
           </Route>
-          <Route path="/organization">
-            <IndexRoute getComponent={function(location, cb){
+          <Route path="/organization" onEnter={onEnterOrganizationPage(store)}>
+            <IndexRedirect to="article" />
+            <Route path="article" getComponent={function(location, cb){
                 require.ensure([], (require) => {
-                  cb(null, require('./views/Organization/Dashboard').default)
+                  cb(null, require('./views/Organization/Dashboard/ManageArticle').default)
                 }, 'organization')
               }}>
-            </IndexRoute>
+            </Route>
             <Route path="article/:id/edit" getComponent={function(location, cb){
                 require.ensure([], (require) => {
                   cb(null, require('./views/Organization/EditArticle').default)
@@ -132,7 +135,24 @@ const MUI = () => (
                 }, 'organization')
               }}>
             </Route>
-
+            <Route path="card" getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Organization/Dashboard/ManageCard').default)
+                }, 'organization')
+              }}>
+            </Route>
+            <Route path="card/:id" getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Organization/Dashboard/CardDetail').default)
+                }, 'organization')
+              }}>
+            </Route>
+            <Route path="setting" getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Organization/Setting').default)
+                }, 'organization')
+              }}>
+            </Route>
           </Route>
         </Route>
       </Router>

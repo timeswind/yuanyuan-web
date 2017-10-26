@@ -26,6 +26,10 @@ export default function (store) {
       type: "SET_ROLE",
       role: localStore.session.get("role")
     })
+    store.dispatch({
+      type: "SET_AVATAR",
+      avatar: localStore.session.get("avatar")
+    })
     // if (localStore.session.get("permissions")) {
     //   let permissions = localStore.session.get("permissions")
     //   store.dispatch({

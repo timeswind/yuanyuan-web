@@ -94,9 +94,11 @@ class LoginView extends Component {
         actions.setName(json.name);
         actions.setEmail(json.email);
         actions.setRole(json.role);
+        actions.setAvatar(json.avatar);
         actions.setLoginState(true);
 
         localStore.session("token", json.token);
+        localStore.session("avatar", json.avatar);
         localStore.session("id", json.id);
         localStore.session("name", json.name);
         localStore.session("email", json.email);
@@ -115,7 +117,7 @@ class LoginView extends Component {
 
   render() {
     return (
-      <div className="view-body">
+      <div>
         <div className="g-background" style={{padding:"36px 8px 64px 8px"}}>
           <div style={{maxWidth: "500px", margin: 'auto', display: 'flex', flexDirection: 'column'}}>
             <div style={{display:'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>

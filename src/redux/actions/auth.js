@@ -7,9 +7,11 @@ import {
   SET_ROLE,
   SET_PERMISSIONS,
   SET_LOGIN_STATE,
+  SET_AVATAR,
   LOGOUT,
   SET_EMAIL_VERIFIED_STATUS,
 } from '../constants'
+import axios from 'axios'
 
 export function setId(id) {
   return {
@@ -67,6 +69,12 @@ export function setLoginState(isLogin) {
   }
 }
 
+export function setAvatar(url) {
+  return {
+    type: SET_AVATAR,
+    avatar: url
+  }
+}
 
 export function setEmailVerifiedStatus(emailVerified) {
   return {
@@ -75,8 +83,31 @@ export function setEmailVerifiedStatus(emailVerified) {
   }
 }
 
-export function logout() {
-  return {
-    type: LOGOUT
+const delay = (ms) => new Promise(resolve =>
+  setTimeout(resolve, ms)
+);
+
+export function updateAvatar(avatar_url) {
+  let url = '/api/protect/profile/avatar';
+  return function (dispatch) {
+    return axios.post(url, {url: avatar_url})
+    .then(function (response) {
+      if (response.data.success) {
+        dispatch({
+          type: SET_AVATAR,
+          avatar: avatar_url
+        })
+      }
+    })
+  }
+}
+
+export const logout = () => {
+  return dispatch => {
+    return delay().then(() => {
+      dispatch({
+        type: LOGOUT
+      })
+    });
   }
 }

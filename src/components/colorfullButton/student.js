@@ -16,16 +16,26 @@ const styles = {
     padding: '0 30px',
     boxShadow: 'rgba(3, 169, 244, 0.22) 0px 3px 5px 2px'
   },
+  disabled: {
+    background: '#ddd',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: '0 0px 0px 0px rgba(255, 105, 135, .30)',
+  }
 };
 
 function OverridesClassNames({
   classes,
   style,
   children,
+  disabled,
   ...custom
 }) {
   return (
-    <Button className={classes.button} style={style} {...custom}>
+    <Button className={disabled ? classes.disabled : classes.button} style={style}  {...custom}>
       {children ? children : 'class names'}
     </Button>
   );
