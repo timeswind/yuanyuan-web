@@ -45,6 +45,9 @@ function updateObject(oldObject, newValues) {
 }
 
 function fetchCardtemplateSuccess(cardtemplate, state) {
+  if ('image' in cardtemplate && cardtemplate['image'].indexOf("yuanyuanofficial.s3.amazonaws.com") >= 0) {
+    cardtemplate['image'] = cardtemplate['image'].replace("yuanyuanofficial.s3.amazonaws.com", "yuanyuan.imgix.net") + "?w=600"
+  }
   var byIds = state.cardTemplates.byIds
   var allIds = state.cardTemplates.allIds
   if (allIds.indexOf(cardtemplate._id) === -1) {
@@ -65,6 +68,12 @@ function fetchCardtemplateSuccess(cardtemplate, state) {
 function fetchCardtemplatesSuccess(cardtemplates, state) {
   var byIds = {}
   var allIds = []
+  cardtemplates = cardtemplates.map(function(cardtemplate){
+    if ('image' in cardtemplate && cardtemplate['image'].indexOf("yuanyuanofficial.s3.amazonaws.com") >= 0) {
+      cardtemplate['image'] = cardtemplate['image'].replace("yuanyuanofficial.s3.amazonaws.com", "yuanyuan.imgix.net") + "?w=600"
+    }
+    return cardtemplate
+  })
   cardtemplates.forEach(function(cardtemplate) {
     byIds[cardtemplate._id] = cardtemplate
     allIds.push(cardtemplate._id)

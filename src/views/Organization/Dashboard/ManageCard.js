@@ -90,6 +90,7 @@ class ManageCardDashboard extends React.Component {
         form["image"] = response.data.link
         self.props.actions.createNewCardtemplate(form).then(function(response) {
           self.props.actions.setViewProgressModalStatus(false)
+          self.props.actions.fetchCardtemplates()
           self.setState({ tab: 1 });
         })
       })

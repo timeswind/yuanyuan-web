@@ -12,7 +12,7 @@ import IndexRedirect from 'react-router/lib/IndexRedirect';
 import { MuiThemeProvider } from 'material-ui/styles';
 import thunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
-// import Raven from 'raven-js';
+import Raven from 'raven-js';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import App from './App';
@@ -29,9 +29,9 @@ import './index.css';
 
 import axios from 'axios'
 
-// if (process.env.NODE_ENV === 'production') {
-//   Raven.config('https://428f8ff22ea44869a1b6410cf83d7905@sentry.io/101570').install();
-// }
+if (process.env.NODE_ENV === 'production') {
+  Raven.config('https://6d85bacfb5e44cbfb1275a9894b5421d@sentry.io/238082').install()
+}
 
 const reactRouterMiddleware = routerMiddleware(browserHistory)
 const store = createStore(

@@ -2,12 +2,11 @@ import React from 'react'
 const styles = {
 
   cardPreview: {
-    borderRadius: 5,
+    borderRadius: 12,
     width: 300,
     height: 180,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    boxShadow: "#aaa 0px 1px 2px",
     display: "flex",
     flexDirection: "column"
   },
