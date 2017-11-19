@@ -3,8 +3,6 @@ import List, { ListItem } from 'material-ui/List';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
-// import ColorfullButton from '../../../components/colorfullButton';
-// import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import CreateCardTemplateForm from '../../../forms/CreateCardTemplateForm'

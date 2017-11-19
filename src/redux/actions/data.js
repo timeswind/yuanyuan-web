@@ -28,15 +28,14 @@ export function fetchCardtemplates() {
 export function fetchCardtemplate(id) {
   let url = `/api/protect/cardtemplate?id=${id}`;
   return function (dispatch) {
-    // dispatch({
-    //   type: FETCH_CARDTEMPLATE
-    // })
     return axios.get(url)
     .then(function (response) {
       if (response.data.success) {
+        console.log(response.data)
         dispatch({
           type: FETCH_CARDTEMPLATE_SUCCESS,
-          cardtemplate: response.data.cardtemplate
+          cardtemplate: response.data.cardtemplate,
+          cards: response.data.cards
         })
       }
     })

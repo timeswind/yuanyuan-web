@@ -3,6 +3,16 @@ import {connect} from 'react-redux';
 import * as DataActions from '../../../redux/actions/data';
 import CardPreview from '../../../components/CardPreview';
 import { bindActionCreators } from 'redux';
+import Card from 'material-ui/Card';
+
+const styles = {
+  cardWrapper: {
+    maxWidth: 800,
+    margin: "32px auto",
+    display: 'flex',
+    flexDirection: 'column',
+  }
+};
 
 class CardTemplateDetail extends React.Component {
   state = {
@@ -37,11 +47,21 @@ class CardTemplateDetail extends React.Component {
     const { auth } = this.props
     return (
       <div>
-        {cardTemplateData !== null && (
-          <CardPreview organizationInfo={{avatar: auth.avatar, name: auth.name}}
-            cardBackgroundImage={cardTemplateData['image']}
-            cardName={cardTemplateData['name']}/>
-        )}
+        <Card style={styles.cardWrapper}>
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px'}}>
+            {cardTemplateData !== null && (
+              <div>
+                <CardPreview organizationInfo={{avatar: auth.avatar, name: auth.name}}
+                  cardBackgroundImage={cardTemplateData['image']}
+                  cardName={cardTemplateData['name']}/>
+                <div style={{marginTop: 16}}>
+                  <a style={{fontSize: '1.5rem', color: 'rgba(0, 0, 0, 0.87)', fontWeight: 'bold'}}>卡片描述</a>
+                  <p style={{marginTop: 0}}>{cardTemplateData["description"]}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </Card>
       </div>
     )
   }
