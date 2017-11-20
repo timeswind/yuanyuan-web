@@ -47,9 +47,9 @@ const styles = {
 
 class CardPreview extends React.Component {
   render() {
-    const { cardName, organizationInfo, cardBackgroundImage } = this.props
+    const { cardName, organizationInfo, cardBackgroundImage, style } = this.props
     return (
-      <div style={{...styles.cardPreview, ...{backgroundImage: `url(${cardBackgroundImage})`}}}>
+      <div style={{...styles.cardPreview, ...{backgroundImage: `url(${cardBackgroundImage})`, ...style}}}>
         <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
           <div style={{display: 'flex', flexDirection: 'row'}}>
             <img style={styles.cardOrganizationIcon} src={organizationInfo.avatar} alt=""/>

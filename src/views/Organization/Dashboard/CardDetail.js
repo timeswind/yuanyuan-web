@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as DataActions from '../../../redux/actions/data';
 import CardPreview from '../../../components/CardPreview';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import Card from 'material-ui/Card';
 
 const styles = {
@@ -10,7 +10,7 @@ const styles = {
     maxWidth: 800,
     margin: "32px auto",
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   }
 };
 
@@ -43,42 +43,58 @@ class CardTemplateDetail extends React.Component {
   }
 
   render() {
-    const { cardTemplateData } = this.state
-    const { auth } = this.props
-    return (
-      <div>
-        <Card style={styles.cardWrapper}>
-          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px'}}>
-            {cardTemplateData !== null && (
-              <div>
-                <CardPreview organizationInfo={{avatar: auth.avatar, name: auth.name}}
-                  cardBackgroundImage={cardTemplateData['image']}
-                  cardName={cardTemplateData['name']}/>
-                <div style={{marginTop: 16}}>
-                  <a style={{fontSize: '1.5rem', color: 'rgba(0, 0, 0, 0.87)', fontWeight: 'bold'}}>卡片描述</a>
-                  <p style={{marginTop: 0}}>{cardTemplateData["description"]}</p>
+    const {cardTemplateData} = this.state
+    const {auth} = this.props
+    return (<div>
+      {
+        cardTemplateData !== null && (
+          <div>
+            <CardPreview style={{margin: '0 auto'}}
+              organizationInfo={{
+                avatar: auth.avatar,
+                name: auth.name
+              }} cardBackgroundImage={cardTemplateData['image']} cardName={cardTemplateData['name']}/>
+            <Card style={styles.cardWrapper}>
+              <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  padding: '16px'
+                }}>
+                <div>
+                    <div style={{
+                        marginTop: 16
+                      }}>
+                      <a style={{
+                          fontSize: '1.5rem',
+                          color: 'rgba(0, 0, 0, 0.87)',
+                          fontWeight: 'bold'
+                        }}>卡片描述</a>
+                        <p style={{
+                            marginTop: 0
+                          }}>{cardTemplateData["description"]}</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </Card>
+
                 </div>
-              </div>
-            )}
-          </div>
-        </Card>
-      </div>
-    )
-  }
-}
+              )
+            }
+          </div>)
+        }
+      }
 
-const mapStatesToProps = (states) => {
-  return {
-    auth: states.auth,
-    cardTemplates: states.data.cardTemplates
-  };
-}
+      const mapStatesToProps = (states) => {
+        return {auth: states.auth, cardTemplates: states.data.cardTemplates};
+      }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatch,
-    actions: bindActionCreators(Object.assign({}, DataActions), dispatch)
-  };
-}
+      const mapDispatchToProps = (dispatch) => {
+        return {
+          dispatch,
+          actions: bindActionCreators(Object.assign({}, DataActions), dispatch)
+        };
+      }
 
-export default connect(mapStatesToProps, mapDispatchToProps)(CardTemplateDetail);
+      export default connect(mapStatesToProps, mapDispatchToProps)(CardTemplateDetail);

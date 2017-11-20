@@ -51,12 +51,14 @@ class OrganizationSettings extends React.Component {
     let file = e.target.files[0];
     console.log(file)
     const self = this
-    self.props.actions.setViewProgressModalStatus(true)
-    uploadAvatarImage(file).then(function(response){
-      console.log(response.data.link)
-      self.props.actions.updateAvatar(response.data.link)
-      self.props.actions.setViewProgressModalStatus(false)
-    })
+    if (file) {
+      self.props.actions.setViewProgressModalStatus(true)
+      uploadAvatarImage(file).then(function(response){
+        console.log(response.data.link)
+        self.props.actions.updateAvatar(response.data.link)
+        self.props.actions.setViewProgressModalStatus(false)
+      })
+    }
   }
 
   render() {
