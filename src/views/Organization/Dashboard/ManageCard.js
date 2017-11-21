@@ -10,9 +10,10 @@ import { uploadImageWithFolder } from '../../../core/upload';
 import * as ViewActions from '../../../redux/actions/view';
 import * as DataActions from '../../../redux/actions/data';
 import { bindActionCreators } from 'redux';
+import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Button from '../../../components/colorfullButton';
 import CardPreview from '../../../components/CardPreview';
 
 function TabContainer (props) {
@@ -148,28 +149,34 @@ class ManageCardDashboard extends React.Component {
       return (
         <ListItem>
           <Card style={{width: '100%'}}>
-            <CardContent>
+            <CardContent style={{padding: 16}}>
               <div style={{display: 'flex', flexDirection: 'row'}}>
                 <div style={{marginRight: 16}}>
-                  <CardPreview organizationInfo={organizationInfo}
+                  <CardPreview
+                    style={{border: '1px solid #ddd'}}
+                    organizationInfo={organizationInfo}
                     cardBackgroundImage={cardTemplateData['image']}
                     cardName={cardTemplateData['name']}/>
                 </div>
                 <div>
-                  <Typography type="headline" component="h2">
+                  <p style={{fontWeight: 'bold', marginTop: 0, marginBottom: 8}}>名称</p>
+                  <Typography type="headline" component="h2" style={{marginBottom: 16}}>
                     {cardTemplateData['name']}
                   </Typography>
-                  <Typography component="p">
+                  <p style={{fontWeight: 'bold', marginBottom: 8}}>卡片描述</p>
+                  <Typography component="p" style={{maxWidth: "300px"}}>
                     {cardTemplateData['description']}
                   </Typography>
                 </div>
               </div>
             </CardContent>
-            <CardActions>
-              <Button dense color="primary" onClick={()=>{this.handleManageButtonOnClick()}}>
-                管理
-              </Button>
-            </CardActions>
+            <Grid container direction={'row'} justify={'flex-end'} style={{padding: 16}}>
+              <Grid item>
+                <Button raised color="primary" style={{color: '#fff'}} onClick={()=>{this.handleManageButtonOnClick()}}>
+                  管理
+                </Button>
+              </Grid>
+            </Grid>
           </Card>
         </ListItem>
       )
