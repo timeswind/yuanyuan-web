@@ -150,8 +150,8 @@ class ManageCardDashboard extends React.Component {
         <ListItem>
           <Card style={{width: '100%'}}>
             <CardContent style={{padding: 16}}>
-              <div style={{display: 'flex', flexDirection: 'row'}}>
-                <div style={{marginRight: 16}}>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                <div style={{marginBottom: 16}}>
                   <CardPreview
                     style={{border: '1px solid #ddd'}}
                     organizationInfo={organizationInfo}

@@ -14,7 +14,17 @@ const styles = {
     color: 'white',
     height: 48,
     padding: '0 30px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
+    boxShadow: 'none',
+    fontFamily: "'Hiragino Sans GB','华文细黑','STHeiti','微软雅黑','Microsoft YaHei',SimHei,'Helvetica Neue',Helvetica,Arial,sans-serif !important"
+  },
+  flatButton: {
+    background: '#9e9e9e',
+    borderRadius: 3,
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    boxShadow: 'none',
+    fontFamily: "'Hiragino Sans GB','华文细黑','STHeiti','微软雅黑','Microsoft YaHei',SimHei,'Helvetica Neue',Helvetica,Arial,sans-serif !important"
   },
   disabled: {
     background: '#ddd',
@@ -23,7 +33,8 @@ const styles = {
     color: 'white',
     height: 48,
     padding: '0 30px',
-    boxShadow: '0 0px 0px 0px rgba(255, 105, 135, .30)',
+    boxShadow: 'none',
+    fontFamily: "'Hiragino Sans GB','华文细黑','STHeiti','微软雅黑','Microsoft YaHei',SimHei,'Helvetica Neue',Helvetica,Arial,sans-serif !important"
   }
 };
 
@@ -32,10 +43,11 @@ function OverridesClassNames({
   style,
   children,
   disabled,
+  flat,
   ...custom
 }) {
   return (
-    <Button className={disabled ? classes.disabled : classes.button} style={style}  {...custom}>
+    <Button className={disabled ? classes.disabled : (flat ? classes.flatButton : classes.button)} style={style}  {...custom}>
       {children ? children : 'class names'}
     </Button>
   );
@@ -44,6 +56,11 @@ function OverridesClassNames({
 OverridesClassNames.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object.isRequired,
+  flat: PropTypes.bool
 };
+
+OverridesClassNames.defaultProps = {
+  flat: false
+}
 
 export default withStyles(styles)(OverridesClassNames);

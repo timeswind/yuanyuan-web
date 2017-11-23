@@ -9,6 +9,16 @@ const theme = createMuiTheme({
       label: {
         color: 'white',
       }
+    },
+    MuiPaper: {
+      shadow2: {
+        boxShadow: 'none',
+        border: '1px solid #e4e4e4',
+      },
+      rounded: {
+        borderRadius: 0,
+        padding: '0 24px'
+      }
     }
   },
   palette: {

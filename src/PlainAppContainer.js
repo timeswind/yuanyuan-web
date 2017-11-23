@@ -5,7 +5,7 @@ class PlainAppContainer extends React.Component {
   render () {
     const {children} = this.props
     return (
-      <div>
+      <div style={{backgroundColor: '#fff'}}>
         <div  style={{paddingLeft: 32, backgroundColor: '#fff'}}>
           <Navbar/>
         </div>

@@ -126,12 +126,14 @@ const styles = theme => ({
     width: '100%',
     height: 430,
     zIndex: 1,
+    background: "#fff"
   },
   appFrame: {
     position: 'relative',
     display: 'flex',
     width: '100%',
     height: '100%',
+    background: "#fff"
   },
   appBar: {
     position: 'fixed',
@@ -190,7 +192,7 @@ const styles = theme => ({
     marginLeft: 61,
     width: `calc(100% - 61px)`,
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: "#fff",
     height: 'calc(100% - 56px)',
     marginTop: 56,
     [theme.breakpoints.up('sm')]: {
