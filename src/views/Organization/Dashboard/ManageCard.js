@@ -1,6 +1,6 @@
 import React from 'react';
 import List, { ListItem } from 'material-ui/List';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Card, { CardContent } from 'material-ui/Card';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import AppBar from 'material-ui/AppBar';
@@ -172,7 +172,7 @@ class ManageCardDashboard extends React.Component {
             </CardContent>
             <Grid container direction={'row'} justify={'flex-end'} style={{padding: 16}}>
               <Grid item>
-                <Button raised color="primary" style={{color: '#fff'}} onClick={()=>{this.handleManageButtonOnClick()}}>
+                <Button color="primary" style={{color: '#fff'}} onClick={()=>{this.handleManageButtonOnClick()}}>
                   管理
                 </Button>
               </Grid>

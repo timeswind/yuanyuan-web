@@ -1,11 +1,27 @@
 import  {
   CREATE_NEW_CARDTEMPLATE,
+  UPDATE_CARDTEMPLATE,
   FETCH_CARDTEMPLATES,
   FETCH_CARDTEMPLATES_SUCCESS,
   FETCH_CARDTEMPLATE_SUCCESS
 } from '../constants'
 
 import axios from 'axios'
+
+export function updateCardtemplate(data) {
+  let url = '/api/protect/cardtemplate';
+  return function (dispatch) {
+    return axios.put(url, data)
+    .then(function (response) {
+      if (response.data.success) {
+        dispatch({
+          type: UPDATE_CARDTEMPLATE,
+          updatedCardtemplate: response.data.updatedCardtemplate
+        })
+      }
+    })
+  }
+}
 
 export function fetchCardtemplates() {
   let url = '/api/protect/cardtemplates/mine';

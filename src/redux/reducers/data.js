@@ -1,4 +1,6 @@
 import {
+  CREATE_NEW_CARDTEMPLATE,
+  UPDATE_CARDTEMPLATE,
   FETCH_CARDTEMPLATES,
   FETCH_CARDTEMPLATES_SUCCESS,
   FETCH_CARDTEMPLATE_SUCCESS
@@ -33,8 +35,26 @@ export default function update(state = initialState, action) {
 
   if(action.type === FETCH_CARDTEMPLATE_SUCCESS) {
     if (action.cardtemplate) {
-      return fetchCardtemplateSuccess(action.cardtemplate, state)
+      const data = {
+        cardtemplate: action.cardtemplate,
+        cards: action.cards || []
+      }
+      return fetchCardtemplateSuccess(data, state)
     }
+  }
+
+  if(action.type === UPDATE_CARDTEMPLATE) {
+    if (action.updatedCardtemplate) {
+      const data = {
+        cardtemplate: action.updatedCardtemplate,
+        cards: action.cards || []
+      }
+      return fetchCardtemplateSuccess(data, state)
+    }
+  }
+
+  if(action.type === CREATE_NEW_CARDTEMPLATE) {
+    return state
   }
 
   return state
@@ -44,25 +64,26 @@ function updateObject(oldObject, newValues) {
   return Object.assign({}, oldObject, newValues);
 }
 
-function fetchCardtemplateSuccess(cardtemplate, state) {
+function fetchCardtemplateSuccess(data, state) {
+  var { cardtemplate, cards } = data
   if ('image' in cardtemplate && cardtemplate['image'].indexOf("yuanyuanofficial.s3.amazonaws.com") >= 0) {
     cardtemplate['image'] = cardtemplate['image'].replace("yuanyuanofficial.s3.amazonaws.com", "yuanyuan.imgix.net") + "?w=600"
   }
+  cardtemplate['cards'] = cards
+  cardtemplate['cards_count'] = cards.length
   var byIds = state.cardTemplates.byIds
   var allIds = state.cardTemplates.allIds
+  byIds[cardtemplate._id] = cardtemplate
   if (allIds.indexOf(cardtemplate._id) === -1) {
-    byIds[cardtemplate._id] = cardtemplate
     allIds.push(cardtemplate._id)
-    return updateObject(state, {
-      cardTemplates: {
-        byIds,
-        allIds,
-        fetching: false
-      }
-    })
-  } else {
-    return state
   }
+  return updateObject(state, {
+    cardTemplates: {
+      byIds,
+      allIds,
+      fetching: false
+    }
+  })
 }
 
 function fetchCardtemplatesSuccess(cardtemplates, state) {

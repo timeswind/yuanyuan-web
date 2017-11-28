@@ -89,7 +89,7 @@ class CardTemplateForm extends React.Component {
 
   render() {
     const { cardBackgroundImage } = this.state
-    const { handleSubmit, pristine, submitting, style, cardName, cardDescription, organizationInfo, invalid } = this.props
+    const { handleSubmit, pristine, submitting, style, cardName, organizationInfo, invalid } = this.props
     return (
       <form onSubmit={handleSubmit(this.save.bind(this))} style={style}>
         <Typography type="display2" gutterBottom>
@@ -109,7 +109,7 @@ class CardTemplateForm extends React.Component {
                   />
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <Button raised color="primary" style={{color: '#fff'}}>
+                <Button color="primary" style={{color: '#fff'}}>
                   上传卡片图案
                   <input id="imageButton"
                     style={styles.exampleImageInput}
@@ -155,11 +155,10 @@ CardTemplateForm = reduxForm({
 const selector = formValueSelector('CardTemplateForm') // <-- same as form name
 CardTemplateForm = connect(state => {
   const name = selector(state, 'name')
-  const description = selector(state, 'description')
+  // const description = selector(state, 'description')
 
   return {
-    cardName: name,
-    cardDescription: description
+    cardName: name
   }
 })(CardTemplateForm)
 

@@ -50,9 +50,6 @@ class OrganizationDashboard extends React.Component {
       submitStatus: 'unsubmited',
       snackbarStatus: false
     };
-    this.localmoment = moment()
-    this.localmoment.locale('fr')
-    this.localmoment.format('LLLL')
     this.onChange = (editorState) => this.setState({editorState});
   }
 
