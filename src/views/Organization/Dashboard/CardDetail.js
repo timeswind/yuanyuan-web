@@ -11,7 +11,7 @@ import TextField from 'material-ui/TextField';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { uploadImageWithFolder } from '../../../core/upload';
-
+import { cardTypes } from '../../../core/dictionary';
 const styles = {
   cardWrapper: {
     maxWidth: 640,
@@ -172,7 +172,7 @@ class CardTemplateDetail extends React.Component {
                   </Grid>
                   <Grid item style={{marginTop: 0}}>
                     <a style={{fontSize: '16px',color: 'rgba(0, 0, 0, 0.87)',fontWeight: 'bold'}}>卡片类型</a>
-                    <p style={{margin: 0 }}>{cardTemplateData["type"]}</p>
+                    <p style={{margin: 0 }}>{Object.keys(cardTypes).indexOf(cardTemplateData["type"]) >= 0 && cardTypes[cardTemplateData["type"]]}</p>
                   </Grid>
                   <Grid item style={{marginTop: 0}}>
                     <a style={{fontSize: '16px',color: 'rgba(0, 0, 0, 0.87)',fontWeight: 'bold'}}>持卡人数</a>

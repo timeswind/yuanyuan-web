@@ -153,6 +153,12 @@ const MUI = () => (
                 }, 'organization')
               }}>
             </Route>
+            <Route path="store" getComponent={function(location, cb){
+                require.ensure([], (require) => {
+                  cb(null, require('./views/Organization/Dashboard/ManageStore').default)
+                }, 'organization')
+              }}>
+            </Route>
           </Route>
         </Route>
       </Router>

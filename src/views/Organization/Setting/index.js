@@ -23,6 +23,7 @@ const styles = theme => ({
     maxWidth: 800,
     margin: '32px auto',
     background: theme.palette.background.paper,
+    border: '1px solid #e4e4e4'
   },
 });
 
@@ -72,30 +73,32 @@ class OrganizationSettings extends React.Component {
             <input ref={input => this.inputElement = input} type="file" onChange={(e) => {this.uploadAvatar(e)}} style={{display: 'none'}}/>
             <img alt="" style={{width: 50, height: 50}} src={auth.avatar !== null ? auth.avatar :  "https://via.placeholder.com/50x50"} />
           </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <WifiIcon />
-            </ListItemIcon>
-            <ListItemText primary="Wi-Fi" />
-            <ListItemSecondaryAction>
-              <Switch
-                onClick={this.handleToggle('wifi')}
-                checked={this.state.checked.indexOf('wifi') !== -1}
-                />
-            </ListItemSecondaryAction>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon>
-              <BluetoothIcon />
-            </ListItemIcon>
-            <ListItemText primary="Bluetooth" />
-            <ListItemSecondaryAction>
-              <Switch
-                onClick={this.handleToggle('bluetooth')}
-                checked={this.state.checked.indexOf('bluetooth') !== -1}
-                />
-            </ListItemSecondaryAction>
-          </ListItem>
+          {/*
+            <ListItem>
+              <ListItemIcon>
+                <WifiIcon />
+              </ListItemIcon>
+              <ListItemText primary="Wi-Fi" />
+              <ListItemSecondaryAction>
+                <Switch
+                  onClick={this.handleToggle('wifi')}
+                  checked={this.state.checked.indexOf('wifi') !== -1}
+                  />
+              </ListItemSecondaryAction>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <BluetoothIcon />
+              </ListItemIcon>
+              <ListItemText primary="Bluetooth" />
+              <ListItemSecondaryAction>
+                <Switch
+                  onClick={this.handleToggle('bluetooth')}
+                  checked={this.state.checked.indexOf('bluetooth') !== -1}
+                  />
+              </ListItemSecondaryAction>
+            </ListItem>
+            */}
         </List>
       </div>
     );

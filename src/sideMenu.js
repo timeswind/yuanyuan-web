@@ -2,6 +2,7 @@ import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import CreateIcon from 'material-ui-icons/Create';
 import CardMembershipIcon from 'material-ui-icons/CardMembership';
+import StoreIcon from 'material-ui-icons/Store';
 // import StarIcon from 'material-ui-icons/Star';
 // import SendIcon from 'material-ui-icons/Send';
 import MailIcon from 'material-ui-icons/Mail';
@@ -32,6 +33,12 @@ class SideMenuClass extends React.Component {
             <CardMembershipIcon />
           </ListItemIcon>
           <ListItemText primary="卡片" />
+        </ListItem>
+        <ListItem button onClick={() => this.navigate('/organization/store')}>
+          <ListItemIcon>
+            <StoreIcon />
+          </ListItemIcon>
+          <ListItemText primary="店铺" />
         </ListItem>
         <Divider></Divider>
         <ListItem button onClick={() => this.navigate('/organization/setting')}>
