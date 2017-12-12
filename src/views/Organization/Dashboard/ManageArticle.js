@@ -1,7 +1,6 @@
 import React from 'react';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import {EditorState, convertToRaw} from 'draft-js';
-// import Snackbar from 'material-ui/Snackbar';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import { Editor } from 'react-draft-wysiwyg';
@@ -15,7 +14,7 @@ import 'moment/locale/zh-cn';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { uploadArticleImage } from '../../../core/upload';
-
+import { handlePastedText } from '../../../utils/handlePaste';
 
 function TabContainer (props) {
   return <div>{props.children}</div>
@@ -44,9 +43,10 @@ class OrganizationDashboard extends React.Component {
     this.state = {
       articles: [],
       title: '',
+      author: '',
+      editorState: EditorState.createEmpty(),
       tab: 0,
       value: 0,
-      editorState: EditorState.createEmpty(),
       submitStatus: 'unsubmited',
       snackbarStatus: false
     };
@@ -54,7 +54,7 @@ class OrganizationDashboard extends React.Component {
   }
 
   renderFromNowTime(date) {
-    return (<div>{moment(date).locale('zh-cn').fromNow()}</div>)
+    return (<a>{moment(date).locale('zh-cn').fromNow()}</a>)
   }
 
   componentDidMount() {
@@ -75,6 +75,15 @@ class OrganizationDashboard extends React.Component {
     this.setState({ title: event.target.value })
   }
 
+  handleAuthorChange = (event) => {
+    this.setState({ author: event.target.value })
+  }
+
+  handlePastedText = (text, html) => {
+    const { editorState } = this.state;
+    return handlePastedText(text, html, editorState, this.onChange);
+  }
+
   getMyArticles() {
     var self = this
     axios.get('/api/protect/articles/mine')
@@ -88,12 +97,32 @@ class OrganizationDashboard extends React.Component {
     });
   }
 
+  getCoverUrl(entityMap) {
+    var coverUrl = ''
+    if (Object.keys(entityMap).length > 0) {
+      for (let [k, entity] of Object.entries(entityMap)) {
+        if (entity.type === 'IMAGE') {
+          coverUrl = entity[0].data.src
+          break
+        }
+      }
+    }
+    if (coverUrl !== '') {
+      return coverUrl
+    } else {
+      return ''
+    }
+  }
+
   submit = () => {
     const self = this
+    const rawContent = convertToRaw(this.state.editorState.getCurrentContent())
     this.setState({submitStatus: 'submitting', snackbarStatus: true})
     axios.post('/api/protect/newarticle', {
       title: this.state.title,
-      content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+      author: this.state.author,
+      content: JSON.stringify(rawContent),
+      cover: self.getCoverUrl(rawContent)
     })
     .then(function (response) {
       self.setState({submitStatus: 'success', tab: 0})
@@ -146,6 +175,12 @@ class OrganizationDashboard extends React.Component {
                     value={this.state.title}
                     onChange={this.handleTitleChange}
                     />
+                  <TextField
+                    style={{margin: 16, width: "160px"}}
+                    label="作者"
+                    value={this.state.author}
+                    onChange={this.handleAuthorChange}
+                    />
                 </div>
                 <Editor
                   editorState={this.state.editorState}
@@ -153,6 +188,7 @@ class OrganizationDashboard extends React.Component {
                   wrapperClassName="editorWrapper"
                   editorClassName="editor"
                   onEditorStateChange={this.onChange}
+                  handlePastedText={this.handlePastedText}
                   toolbar={{
                     image: { urlEnabled: true, uploadEnabled: true, uploadCallback: uploadArticleImage, defaultSize: { width: "100%", height: "auto" }}
                   }}

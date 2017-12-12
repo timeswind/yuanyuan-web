@@ -1,4 +1,8 @@
 import {
+  FETCH_ARTICLES,
+  FETCH_ARTICLES_SUCCESS,
+  CREATE_NEW_ARTICLE,
+  DELETE_ARTICLE_SUCCESS,
   CREATE_NEW_CARDTEMPLATE,
   UPDATE_CARDTEMPLATE,
   FETCH_CARDTEMPLATES,
@@ -7,6 +11,11 @@ import {
 } from '../constants'
 
 const initialState = {
+  articles: {
+    byIds: {},
+    allIds: [],
+    fetching: false
+  },
   cardTemplates: {
     byIds: {},
     allIds: [],

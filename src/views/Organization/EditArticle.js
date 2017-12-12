@@ -5,9 +5,12 @@ import {convertFromRaw, convertToRaw, EditorState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {connect} from 'react-redux';
-import Button from 'material-ui/Button';
+import ColorfullButton from '../../components/colorfullButton';
 import TextField from 'material-ui/TextField';
 import { uploadArticleImage } from '../../core/upload';
+import { handlePastedText } from '../../utils/handlePaste';
+import * as DataActions from '../../redux/actions/data';
+import {bindActionCreators} from 'redux';
 
 const styles = {
   headline: {
@@ -42,24 +45,43 @@ class EditArticleView extends React.Component {
     };
   }
 
+  getCoverUrl(entityMap) {
+    var coverUrl = ''
+    if (Object.keys(entityMap).length > 0) {
+      for (let [k, entity] of Object.entries(entityMap)) {
+        if (entity.type === 'IMAGE') {
+          coverUrl = entity[0].data.src
+          break
+        }
+      }
+    }
+
+    if (coverUrl !== '') {
+      return coverUrl
+    } else {
+      return ''
+    }
+  }
+
   componentWillMount() {
+    const { auth, routeParams } = this.props
     const self = this
-    axios.get('/api/public/article?id=' + this.props.routeParams.id)
+    axios.get('/api/public/article?id=' + routeParams.id)
     .then(function (response) {
       if (response.data.success) {
-        console.log(response.data)
+        console.log(JSON.parse(response.data.article.content))
         self.setState({
           id: response.data.article._id,
           title: response.data.article.title,
           editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(response.data.article.content)))
         })
-        if (self.props.auth.id === response.data.article.user) {
+        if (auth.id === response.data.article.user) {
           self.setState({isAuthor: true})
         }
       }
     })
     .catch(function (error) {
-      console.log(error);
+      console.error(error);
     });
   }
 
@@ -69,11 +91,13 @@ class EditArticleView extends React.Component {
 
   submit = () => {
     const self = this
+    const rawContent = convertToRaw(this.state.editorState.getCurrentContent())
     this.setState({submitStatus: 'submitting', snackbarStatus: true})
     axios.put('/api/protect/article', {
       _id: this.state.id,
       title: this.state.title,
-      content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+      content: JSON.stringify(rawContent),
+      cover: self.getCoverUrl(rawContent)
     })
     .then(function (response) {
       if (response.data.success) {
@@ -85,6 +109,11 @@ class EditArticleView extends React.Component {
       console.log(error);
       self.setState({submitStatus: 'failed'})
     });
+  }
+
+  handlePastedText = (text, html) => {
+    const { editorState } = this.state;
+    return handlePastedText(text, html, editorState, this.onEditorChange);
   }
 
   render() {
@@ -102,12 +131,13 @@ class EditArticleView extends React.Component {
             toolbarClassName="toolbarClassName"
             wrapperClassName="editorWrapp`er"
             editorClassName="editor"
+            handlePastedText={this.handlePastedText}
             onEditorStateChange={this.onEditorChange}
             toolbar={{
               image: { urlEnabled: true, uploadEnabled: true, uploadCallback: uploadArticleImage, defaultSize: { width: "100%", height: "auto" }}
             }}
             />
-          <Button raised style={styles.submitButton} onClick={this.submit}>更新并发布</Button>
+          <ColorfullButton raised style={styles.submitButton} onClick={this.submit}>更新并发布</ColorfullButton>
         </div>
       </div>
     )
@@ -123,7 +153,8 @@ const mapStatesToProps = (states) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
+    dispatch,
+    actions: bindActionCreators(Object.assign({}, DataActions), dispatch)
   };
 }
 

@@ -1,4 +1,9 @@
 import  {
+  FETCH_ARTICLES,
+  FETCH_ARTICLES_SUCCESS,
+  FETCH_ARTICLES_FAIL,
+  CREATE_NEW_ARTICLE,
+  DELETE_ARTICLE_SUCCESS,
   CREATE_NEW_CARDTEMPLATE,
   UPDATE_CARDTEMPLATE,
   FETCH_CARDTEMPLATES,
@@ -7,6 +12,59 @@ import  {
 } from '../constants'
 
 import axios from 'axios'
+
+export function deleteArticle(id) {
+  let url = '/api/protect/article?id=' + id;
+  return function (dispatch) {
+    return axios.delete(url)
+    .then(function (response) {
+      if (response.data.success) {
+        dispatch({
+          type: DELETE_ARTICLE_SUCCESS,
+          id: id
+        })
+      }
+    })
+  }
+}
+
+export function fetchSelfArticles() {
+  return function(dispatch) {
+    dispatch({
+      type: FETCH_ARTICLES
+    })
+    return axios.get('/api/protect/articles/mine')
+    .then(function (response) {
+      if (response.data.success) {
+        dispatch({
+          type: FETCH_ARTICLES_SUCCESS,
+          articles: response.data.articles
+        })
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+      dispatch({
+        type: FETCH_ARTICLES_FAIL
+      })
+    });
+  }
+}
+
+export function createNewArticle(data) {
+  return function(dispatch) {
+    return axios.post('/api/protect/newarticle', data)
+    .then(function (response) {
+      dispatch({
+        type: CREATE_NEW_ARTICLE,
+        article: response.data.article
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+}
 
 export function updateCardtemplate(data) {
   let url = '/api/protect/cardtemplate';

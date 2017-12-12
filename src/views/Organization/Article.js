@@ -7,6 +7,8 @@ import LazyLoad from 'react-lazyload';
 import {connect} from 'react-redux';
 import Button from 'material-ui/Button';
 import ColorfullButton from '../../components/colorfullButton';
+import * as DataActions from '../../redux/actions/data';
+import {bindActionCreators} from 'redux';
 
 const styles = {
   articleWrapper: {
@@ -65,6 +67,14 @@ class ArticleView extends React.Component {
     this.props.dispatch(push(`/organization/article/${this.state.id}/edit`))
   }
 
+  delete = () => {
+    const {id} = this.state
+    const {actions, dispatch} = this.props
+    actions.deleteArticle(id).then(function(response) {
+      dispatch(push(`/organization/article`))
+    })
+  }
+
   componentWillMount() {
     const self = this
     axios.get('/api/public/article?id=' + this.props.routeParams.id)
@@ -92,7 +102,7 @@ class ArticleView extends React.Component {
         {this.state.isAuthor && (
           <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: 32}}>
             <ColorfullButton color="primary" raised style={{color: '#fff'}} onClick={this.edit}>编辑</ColorfullButton>
-            <Button style={{color: 'red'}}>删除</Button>
+            <Button style={{color: 'red'}} onClick={this.delete}>删除</Button>
           </div>
         )}
         <h1 style={styles.title}>{this.state.title}</h1>
@@ -111,7 +121,8 @@ const mapStatesToProps = (states) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch
+    dispatch,
+    actions: bindActionCreators(Object.assign({}, DataActions), dispatch)
   };
 }
 
